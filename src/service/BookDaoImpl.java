@@ -25,7 +25,14 @@ public class BookDaoImpl implements BookDao {
     }
 
     @Override
-    public List<Book> getBookList() {
-        return bookMapper.getBookList();
+    public List<Book> getBookList(Book book) {
+        return bookMapper.getBookList(book);
     }
+
+    @Override
+    public boolean getBookAdd(Book book) {
+        return bookMapper.getBookAdd(book);
+    }
+
+
 }

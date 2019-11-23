@@ -11,5 +11,8 @@ public interface BookMapper {
 
     public void borrow(BorrowBookUser b);
 
-    public List<Book> getBookList();
+    public List<Book> getBookList(Book book);
+
+
+    public boolean getBookAdd(Book book);
 }

@@ -3,8 +3,8 @@
 <html>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <title>Insert title here</title>
-<link type="text/css" rel="stylesheet" href="css/style.css">
-<script type="text/javascript" src="js/jquery-1.8.3.min.js"></script>
+<link type="text/css" rel="stylesheet" href="../css/style.css">
+<script type="text/javascript" src="../js/jquery-1.8.3.min.js"></script>
 </head>
 <body>
 	<div class="main">
@@ -28,6 +28,6 @@
 				<input type="button" id="update" value="修改" class="input-button" />
 			</div>
 	</div>
-	<script type="text/javascript" src="js/user/updatePwd.js"></script>
+	<script type="text/javascript" src="../js/user/updatePwd.js"></script>
 </body>
 </html>

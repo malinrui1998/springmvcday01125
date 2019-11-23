@@ -3,7 +3,6 @@ package controller;
 
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
-import exception.ParamErrorException;
 import org.apache.commons.io.FilenameUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -20,6 +19,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.io.File;
 import java.io.IOException;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -42,6 +42,11 @@ public class Productcontroller {
         return "left";
     }
 
+    @RequestMapping("/frame.action")
+    public String frame() {
+        return "frame";
+    }
+
     @RequestMapping("/userList.action")
     public String getUserList(@RequestParam(required = false, defaultValue = "1", value = "page") int page, Model model) {
         System.out.println("Productcontroller>>>productList.action");
@@ -50,23 +55,33 @@ public class Productcontroller {
         PageHelper.startPage(page, 4);
         List<User> userList = userDao.getUserList();
         PageInfo pageInfo = new PageInfo(userList);
-
         model.addAttribute("pageInfo", pageInfo);
         return "userlist";
     }
+//
+//    @RequestMapping("/billList.action")
+//    public String getBillList(@RequestParam(required = false, defaultValue = "1", value = "page") int page, Model model) {
+//
+//        //首先是设置第几页，第二各参数是每页的记录数
+//        PageHelper.startPage(page, 4);
+//        List<Book> billList = bookDao.getBookList();
+//        PageInfo pageInfo = new PageInfo(billList);
+//        model.addAttribute("pageInfo", pageInfo);
+//        return "billList";
+//    }
 
     @RequestMapping("/bookList.action")
-    public String getBookList(@RequestParam(required = false, defaultValue = "1", value = "page") int page, Model model) {
-        System.out.println("Productcontroller>>>productList.action");
-
+    public ModelAndView getBookList(@RequestParam(required = false, defaultValue = "1", value = "page") int page, Model model) {
+        ModelAndView mad = new ModelAndView();
         //首先是设置第几页，第二各参数是每页的记录数
         PageHelper.startPage(page, 4);
-        List<Book> bookList = bookDao.getBookList();
+        List<Book> bookList = bookDao.getBookList(null);
         PageInfo pageInfo = new PageInfo(bookList);
-
-        model.addAttribute("pageInfo", pageInfo);
-        return "bookList";
+        mad.addObject("pageInfo",pageInfo);
+        mad.setViewName("bookList");
+        return mad;
     }
+
 
     @RequestMapping("/loginPage.action")
     public String loginPage() {
@@ -88,7 +103,7 @@ public class Productcontroller {
         if (loginUser != null) {
             //重定向
             session.setAttribute("user", loginUser);
-            return "redirect:/left.action";
+            return "redirect:frame.action";
             //return "redirect:/userList.action";
         } else {
             model.addAttribute("msg", "用户名密码错误");
@@ -141,20 +156,6 @@ public class Productcontroller {
     }
 
 
-    @RequestMapping(value = "/search.action", method = RequestMethod.POST)
-
-    public @ResponseBody
-    List<Product> search(@RequestBody User user1) {
-
-        List<Product> list = new ArrayList<>();
-        list.add(new Product(1, "phone", 20.0f, new Date(), "test"));
-        list.add(new Product(1, "phone", 20.0f, new Date(), "test"));
-        list.add(new Product(1, "手机", 20.0f, new Date(), "test"));
-        return list;
-
-    }
-
-
     @RequestMapping(value = "/searchUserAjax.action")
     @ResponseBody
     public List<User> searchUserAjax(@RequestBody User user) {
@@ -178,7 +179,7 @@ public class Productcontroller {
     public String borrowBook(Model model) {
         List<Book> books = bookDao.borrowBookList();
         model.addAttribute("books", books);
-        return "bookList";
+        return "bill2";
     }
 
     @RequestMapping("borrow.action")
@@ -190,5 +191,26 @@ public class Productcontroller {
         return "redirect:borrowBook.action";
     }
 
+    @RequestMapping("/billAdd.action")
+    public ModelAndView billAdd(Book book, @RequestParam(required = false, defaultValue = "1", value = "page") int page)throws SQLException {
+        ModelAndView mad = new ModelAndView();
+        PageHelper.startPage(page, 4);
+        List<Book> bookList = bookDao.getBookList(null);
+        PageInfo pageInfo = new PageInfo(bookList);
+        boolean bookAdd=bookDao.getBookAdd(book);
+        if (bookAdd) {
+            mad.addObject("pageInfo",pageInfo);
+            mad.setViewName("redirect:/bookList.action");
+        } else {
+            mad.setViewName("billAdd");
+        }
 
-}
+        return mad;
+    }
+
+//    view显示页面
+
+
+    }
+
+

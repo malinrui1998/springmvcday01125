@@ -3,28 +3,41 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="mapper.BookMapper">
-
-
-    <select id="getBookList" resultMap="bookmap">
-        select * from book
-    </select>
-
     <resultMap id="bookmap" type="book">
-        <id property="id" column="id"></id>
-        <result property="name" column="name"></result>
-        <result property="author" column="name"></result>
-        <result property="publishDate" column="publishDate"></result>
+        <id property="bookid" column="bookid"></id>
+        <result property="productName" column="productName"></result>
+        <result property="productUnit" column="productUnit"></result>
+        <result property="proId" column="proId"></result>
+        <result property="payed" column="payed"></result>
         <association property="borrowBookUser" javaType="BorrowBookUser">
             <id property="id" column="bubid"></id>
         </association>
     </resultMap>
+
+    <select id="getBookList" resultType="book" parameterType="book">
+        select * from book
+    </select>
+
+
+
     <select id="borrowBookList" resultMap="bookmap">
 
-        select b.id,b.name,b.author,b.publishDate, bub.id as bubid from book as b left join borrow_user_book as bub on b.id=bub.bookid
+        select b.bookid,b.name,b.author,b.publishDate, bub.id as bubid from book as b left join borrow_user_book as bub on b.bookid=bub.bookid
     </select>
 
     <insert id="borrow" parameterType="BorrowBookUser">
         insert into borrow_user_book value(null,#{userid},#{bookid})
     </insert>
+
+    <insert id="getBookAdd" parameterType="book">
+        insert into book(bookid,productName,productUnit,proId,payed) values (#{bookid},#{productName},#{productUnit},#{proId},#{payed})
+    </insert>
+
+    <select id="getBookid" parameterType="book">
+        select * book where bookid=#{bookid}
+    </select>
+
+
+
 
 </mapper>

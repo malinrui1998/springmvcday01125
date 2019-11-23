@@ -37,21 +37,23 @@
     </style>
 </head>
 <body>
+<form method="post" action="/mlr/frame.action">
 <div class="content">
     <div class="top">
-        <iframe src="top.jsp" scrolling="No" id="top" noresize="noresize">
+        <iframe src="<%=request.getContextPath()%>/page/top.jsp" scrolling="No" id="top" noresize="noresize">
         </iframe>
     </div>
     <div class="main">
         <div class="left">
-            <iframe src="left.jsp" scrolling="No" id="left" noresize="noresize">
+            <iframe src="<%=request.getContextPath()%>/page/left.jsp" scrolling="No" id="left" noresize="noresize">
             </iframe>
         </div>
         <div class="right">
-            <iframe src="main.jsp" id="mainFrame" name="mainFrame" noresize="noresize">
+            <iframe src="<%=request.getContextPath()%>/page/main.jsp" id="mainFrame" name="mainFrame" noresize="noresize">
             </iframe>
         </div>
     </div>
 </div>
+</form>
 </body>
 </html>

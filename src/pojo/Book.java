@@ -3,61 +3,60 @@ package pojo;
 import java.util.Date;
 
 public class Book {
-    private Integer id;
-    private String name;
-    private String author;
-    private Date publishDate;
+    private Integer bookid;
+    private String productName;
+    private String productUnit;
+    private String proId;
+    private String payed;
+
+    public Integer getBookid() {
+        return bookid;
+    }
+
+    public void setBookid(Integer bookid) {
+        this.bookid = bookid;
+    }
+
+    public String getProductName() {
+        return productName;
+    }
+
+    public void setProductName(String productName) {
+        this.productName = productName;
+    }
+
+    public String getProductUnit() {
+        return productUnit;
+    }
+
+    public void setProductUnit(String productUnit) {
+        this.productUnit = productUnit;
+    }
+
+    public String getProId() {
+        return proId;
+    }
+
+    public void setProId(String proId) {
+        this.proId = proId;
+    }
+
+    public String getPayed() {
+        return payed;
+    }
+
+    public void setPayed(String payed) {
+        this.payed = payed;
+    }
 
     @Override
     public String toString() {
         return "Book{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                ", author='" + author + '\'' +
-                ", publishDate=" + publishDate +
-                ", borrowBookUser=" + borrowBookUser +
+                "bookid=" + bookid +
+                ", productName='" + productName + '\'' +
+                ", productUnit='" + productUnit + '\'' +
+                ", proId='" + proId + '\'' +
+                ", payed='" + payed + '\'' +
                 '}';
-    }
-
-    private BorrowBookUser borrowBookUser;
-
-    public BorrowBookUser getBorrowBookUser() {
-        return borrowBookUser;
-    }
-
-    public void setBorrowBookUser(BorrowBookUser borrowBookUser) {
-        this.borrowBookUser = borrowBookUser;
-    }
-
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getAuthor() {
-        return author;
-    }
-
-    public void setAuthor(String author) {
-        this.author = author;
-    }
-
-    public Date getPublishDate() {
-        return publishDate;
-    }
-
-    public void setPublishDate(Date publishDate) {
-        this.publishDate = publishDate;
     }
 }
