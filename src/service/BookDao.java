@@ -10,15 +10,15 @@ public interface BookDao {
 
     public boolean getBookAdd(Book book);
 
-    public List<Book> selectBill2(Book book);
+    public Book getBookByid(Integer id);
 
-    public List<Book> selectById(String productName, String productUnit);
+    public boolean updateBook(Book book) throws Exception;
 
-    public void insertBorrow(Borrow borrow);
+    public boolean deleteByid(Book book) throws Exception;
 
-    public void deleteBook(Integer id);
+    public boolean Register(Book book) throws Exception;
 
-    public void updateBook(Book book);
+    public boolean borrow(Borrow borrow) throws Exception;
 
-    public void updatePress(Book book);
+    public boolean lendUpdate(Integer id) throws Exception;
 }

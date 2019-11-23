@@ -36,7 +36,7 @@
     </select>
     <select id="getUserByid" parameterType="java.lang.Integer" resultMap="usermap">
         <include refid="s"/>
-        where id=#{user_id}
+        where id=#{userid}
     </select>
 
     <select id="checkUserName" parameterType="string" resultType="integer">

@@ -9,17 +9,13 @@ public interface BookMapper {
     public List<Book> getBookList(Book book);
 
     public boolean getBookAdd(Book book);
+    public Book getBookByid(Integer id);
+    public boolean updateBook(Book book) throws Exception;
+    public boolean deleteByid(Book book) throws Exception;
+    public boolean Register(Book book) throws Exception;
+    public boolean borrow(Borrow borrow)throws Exception;
+    public boolean lendUpdate(Integer id)throws Exception;
 
-    public List<Book> selectBill2(Book book);
 
-    public List<Book> selectById(String bookname, String writer);
-
-    public void insertBorrow(Borrow borrow);
-
-    public void deleteBook(Integer id);
-
-    public void updateBook(Book book);
-
-    public void updatePress(Book book);
 }
 

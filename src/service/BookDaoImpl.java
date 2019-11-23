@@ -24,31 +24,34 @@ public class BookDaoImpl implements BookDao {
     }
 
     @Override
-    public List<Book> selectBill2(Book book) {
-        return bookMapper.selectBill2 (book);
+    public Book getBookByid(Integer id) {
+
+        return bookMapper.getBookByid(id);
     }
 
     @Override
-    public List<Book> selectById(String bookname, String writer) {
-        return bookMapper.selectById (bookname,writer);
-    }
-
-
-    @Override
-    public void insertBorrow(Borrow borrow) {
+    public boolean updateBook(Book book) throws Exception {
+        return bookMapper.updateBook(book);
     }
 
     @Override
-    public void deleteBook(Integer id) {
-        bookMapper.deleteBook (id);
+    public boolean deleteByid(Book book) throws Exception {
+        return bookMapper.deleteByid(book);
     }
 
     @Override
-    public void updateBook(Book book) { bookMapper.updateBook (book);}
+    public boolean Register(Book book) throws Exception {
+        return bookMapper.Register(book);
+    }
 
     @Override
-    public void updatePress(Book book) {
-        bookMapper.updatePress(book);
+    public boolean borrow(Borrow borrow) throws Exception {
+        return bookMapper.borrow(borrow);
+    }
+
+    @Override
+    public boolean lendUpdate(Integer id) throws Exception {
+        return bookMapper.lendUpdate(id);
     }
 
 

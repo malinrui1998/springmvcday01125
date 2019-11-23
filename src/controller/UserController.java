@@ -23,7 +23,7 @@ public class UserController {
     @Autowired
     UserDao userDao;
     @Autowired
-    HttpServletRequest reqeust;
+    HttpServletRequest request;
 
     @RequestMapping("getUserByid.action")
     public ModelAndView getUserByid(int id) {
@@ -43,7 +43,6 @@ public class UserController {
         user.setHeadpath(filename);
         int updatehead = userDao.updatehead(user);
         return "redirect:/userList.action";
-
     }
 
     @RequestMapping("/check.action")

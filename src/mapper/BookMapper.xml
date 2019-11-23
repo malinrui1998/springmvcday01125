@@ -9,6 +9,7 @@
         <result property="productUnit" column="productUnit"></result>
         <result property="proId" column="proId"></result>
         <result property="payed" column="payed"></result>
+
         <association property="borrow" javaType="Borrow">
             <id property="id" column="bubid"></id>
         </association>
@@ -22,29 +23,26 @@
         insert into book(bookid,productName,productUnit,proId,payed) values (#{bookid},#{productName},#{productUnit},#{proId},#{payed})
     </insert>
 
-    <select id="selectBill2" resultType="Book">
-        select * from book
-        <where>
-            <if test="productName!=null and productName!=''">
-                and productName = #{productName}
-            </if>
-            <if test="productUnit!=null and productUnit!=''">
-                and productUnit = #{productUnit}
-            </if>
-            <if test="proId!=null and proId!=''">
-                and proId = #{proId}
-            </if>
-            <if test="payed!=null and payed!=''">
-                and payed = #{payed}
-            </if>
-        </where>
+    <select id="getBookByid" parameterType="book" resultType="book">
+        select * from book where bookid=#{bookid}
     </select>
+    <delete id="deleteByid" parameterType="book">
+        delete from book where bookid=#{bookid}
+    </delete>
 
+    <!--<insert id="Register" parameterType="book">-->
+        <!--insert into book values(#{id}=null ,#{productName},#{productUnit},#{proId},#{payed})-->
+    <!--</insert>-->
+    <update id="updateBook" parameterType="book">
+        update book set productName=#{productName},productUnit=#{productUnit},proId=#{proId},payed=#{payed} where bookid=#{bookid}
+    </update>
 
-
-
-
-
+    <insert id="borrow" parameterType="borrow" >
+    insert into borrow values(#{id}=null ,#{bookid},#{userid} )
+    </insert>
+    <!--<update id="lendUpdate" parameterType="book">-->
+    <!--update book  set lend="是" where id=#{id}-->
+<!--</update>-->
 
 
 </mapper>

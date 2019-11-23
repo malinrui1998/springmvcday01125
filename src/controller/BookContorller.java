@@ -11,6 +11,7 @@ import org.springframework.web.servlet.ModelAndView;
 import pojo.*;
 import service.BookDao;
 import service.UserDao;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.sql.SQLException;
@@ -92,20 +93,20 @@ public class BookContorller {
         PageHelper.startPage(page, 4);
         List<Book> bookList = bookDao.getBookList(null);
         PageInfo pageInfo = new PageInfo(bookList);
-        mad.addObject("pageInfo",pageInfo);
+        mad.addObject("pageInfo", pageInfo);
         mad.setViewName("bookList");
         return mad;
     }
 
     @RequestMapping("/billAdd.action")
-    public ModelAndView billAdd(Book book, @RequestParam(required = false, defaultValue = "1", value = "page") int page)throws SQLException {
+    public ModelAndView billAdd(Book book, @RequestParam(required = false, defaultValue = "1", value = "page") int page) throws SQLException {
         ModelAndView mad = new ModelAndView();
         PageHelper.startPage(page, 4);
         List<Book> bookList = bookDao.getBookList(null);
         PageInfo pageInfo = new PageInfo(bookList);
-        boolean bookAdd=bookDao.getBookAdd(book);
+        boolean bookAdd = bookDao.getBookAdd(book);
         if (bookAdd) {
-            mad.addObject("pageInfo",pageInfo);
+            mad.addObject("pageInfo", pageInfo);
             mad.setViewName("redirect:/bookList.action");
         } else {
             mad.setViewName("billAdd");
@@ -114,54 +115,64 @@ public class BookContorller {
     }
 
     @RequestMapping("/bill2.action")
-    public ModelAndView bill2(@RequestParam(required = false,defaultValue = "1",value = "page")int page,Book book){
-        ModelAndView mad=new ModelAndView();
-        PageHelper.startPage(page,5);
+    public ModelAndView bill2(@RequestParam(required = false, defaultValue = "1", value = "page") int page, Model model, Book book) {
+        ModelAndView mad = new ModelAndView();
+        PageHelper.startPage(page, 5);
         List<Book> bookList = bookDao.getBookList(book);
-        PageInfo pageInfo=new PageInfo(bookList);
-
-        mad.addObject("pageInfo",pageInfo);
+        PageInfo pageInfo = new PageInfo(bookList);
+        model.addAttribute("searchName", book.getProductName());
+        model.addAttribute("searchAuthor", book.getProductUnit());
+        model.addAttribute("pageInfo", pageInfo);
+        mad.addObject("bookList", bookList);
         mad.setViewName("bill2");
         return mad;
     }
-    @RequestMapping("/billView.action")
-    public ModelAndView billView(@RequestParam(required = false,defaultValue = "1",value = "page")int page,String bookname, String writer){
+
+    @RequestMapping("/getBookByid.action")
+    public ModelAndView getBookByid(Integer bookid) {
         ModelAndView mav = new ModelAndView();
-//      PageHelper.startPage(page,5);
-        List<Book> books = bookDao.selectById(bookname,writer);
-        PageInfo pageInfo=new PageInfo(books);
-        mav.addObject("pageInfo",pageInfo);
-        mav.setViewName("billList");
+        Book book = null;
+        book = bookDao.getBookByid(bookid);
+        mav.addObject("book", book);
+        mav.setViewName("billView");
         return mav;
     }
 
-    @RequestMapping("/deleteBook.action")
-    public String deleteBook(Model model,Integer bookid) {
-        bookDao.deleteBook (bookid);
-        return "billList";
-    }
-    @RequestMapping("/billUpdate.action")
-    public ModelAndView billUpdate(String bookname,String writer) {
+    @RequestMapping("/selectById.action")
+    public ModelAndView selectById(Integer bookid) {
         ModelAndView mav = new ModelAndView();
-        List<Book> books= bookDao.selectById(bookname,writer);
-        mav.addObject("books", books);
+        Book book = null;
+        book = bookDao.getBookByid(bookid);
+        mav.addObject("book", book);
         mav.setViewName("billUpdate");
         return mav;
     }
+
+    @RequestMapping("/registerBook.action")
+    public String register(Book book) throws Exception {
+        bookDao.Register(book);
+        return "redirect:/bookList.action";
+    }
+
+    @RequestMapping("/deleteBook.action")
+    public String delete(Book book) throws Exception {
+        bookDao.deleteByid(book);
+        return "forward:/bookList.action";
+    }
+
     @RequestMapping("/updateBook.action")
-    public ModelAndView update(Book book){
-        ModelAndView mav = new ModelAndView();
-        bookDao.updateBook (book);
-        Book book1=null;
-        List<Book> billList = bookDao.getBookList(book);
-        mav.addObject("billList",billList);
-        mav.setViewName("billList");
-        return mav;
+    public String updateBook(Book book) throws Exception {
+        bookDao.updateBook(book);
+        return "redirect:/bookList.action";
     }
 
-//    view显示页面
-
-
+    @RequestMapping("/borrow.action")
+    public String borrow(Borrow borrow) throws Exception {
+        Integer id = (Integer) reqeust.getSession().getAttribute("bookid");
+        borrow.setUserid(id);
+        bookDao.borrow(borrow);
+        return "redirect:/bookList.action";
     }
+}
 
 
