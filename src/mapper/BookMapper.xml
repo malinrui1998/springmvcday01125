@@ -22,6 +22,28 @@
         insert into book(bookid,productName,productUnit,proId,payed) values (#{bookid},#{productName},#{productUnit},#{proId},#{payed})
     </insert>
 
+    <select id="selectBill2" resultType="Book">
+        select * from book
+        <where>
+            <if test="productName!=null and productName!=''">
+                and productName = #{productName}
+            </if>
+            <if test="productUnit!=null and productUnit!=''">
+                and productUnit = #{productUnit}
+            </if>
+            <if test="proId!=null and proId!=''">
+                and proId = #{proId}
+            </if>
+            <if test="payed!=null and payed!=''">
+                and payed = #{payed}
+            </if>
+        </where>
+    </select>
+
+
+
+
+
 
 
 

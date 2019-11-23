@@ -3,34 +3,24 @@ package controller;
 
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
-import org.apache.commons.io.FilenameUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 import pojo.*;
 import service.BookDao;
 import service.UserDao;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
-import java.io.File;
-import java.io.IOException;
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
-import java.util.UUID;
-
 
 @Controller
-public class Productcontroller {
+public class BookContorller {
 
     @RequestMapping("/left.action")
     public String getLeft(@RequestParam(required = false, defaultValue = "1", value = "page") int page, Model model) {
-        System.out.println("Productcontroller>>>productList.action");
-
         //首先是设置第几页，第二各参数是每页的记录数
         PageHelper.startPage(page, 6);
         List<User> userList = userDao.getUserList();
@@ -84,59 +74,6 @@ public class Productcontroller {
         }
     }
 
-//    @RequestMapping("getUserByid.action")
-//    public ModelAndView getUserByid(int id) {
-//        User user = userDao.getUserByid(id);
-//        ModelAndView modelAndView = new ModelAndView();
-//        modelAndView.addObject("user", user);
-//        modelAndView.setViewName("modify");
-//        return modelAndView;
-//    }
-//
-//    @RequestMapping("/update.action")
-//    public String update(User user, MultipartFile pictureFile) throws IOException {
-//        String filename = UUID.randomUUID().toString().replaceAll("-", "");
-//        String extension = FilenameUtils.getExtension(pictureFile.getOriginalFilename());
-//        filename = filename + "." + extension;
-//        pictureFile.transferTo(new File("D:\\upload\\" + filename));
-//        user.setHeadpath(filename);
-//        int updatehead = userDao.updatehead(user);
-//        return "redirect:/userList.action";
-//
-//    }
-//
-//    @RequestMapping("/check.action")
-//    @ResponseBody
-//    public String checkName(String name) {
-//        int i = userDao.checkUserName(name);
-//        if (i > 0) {
-//            return "用户名已被注册";
-//        } else {
-//            return "用户名没有被使用可以注册";
-//        }
-//    }
-//
-//    @RequestMapping("/searchPage.action")
-//    public String registerPage() {
-//
-//        return "search";
-//    }
-//
-//    @RequestMapping("/checkPage.action")
-//    public String checkPage() {
-//        return "test";
-//    }
-//
-//
-//    @RequestMapping(value = "/searchUserAjax.action")
-//    @ResponseBody
-//    public List<User> searchUserAjax(@RequestBody User user) {
-//        List<User> users = userDao.searchByWhere(user);
-//        return users;
-//
-//
-//    }
-
     @RequestMapping("/searchUserAjaxPage.action")
 
     public String searchUserAjaxPage() {
@@ -176,7 +113,51 @@ public class Productcontroller {
         return mad;
     }
 
+    @RequestMapping("/bill2.action")
+    public ModelAndView bill2(@RequestParam(required = false,defaultValue = "1",value = "page")int page,Book book){
+        ModelAndView mad=new ModelAndView();
+        PageHelper.startPage(page,5);
+        List<Book> bookList = bookDao.getBookList(book);
+        PageInfo pageInfo=new PageInfo(bookList);
 
+        mad.addObject("pageInfo",pageInfo);
+        mad.setViewName("bill2");
+        return mad;
+    }
+    @RequestMapping("/billView.action")
+    public ModelAndView billView(@RequestParam(required = false,defaultValue = "1",value = "page")int page,String bookname, String writer){
+        ModelAndView mav = new ModelAndView();
+//      PageHelper.startPage(page,5);
+        List<Book> books = bookDao.selectById(bookname,writer);
+        PageInfo pageInfo=new PageInfo(books);
+        mav.addObject("pageInfo",pageInfo);
+        mav.setViewName("billList");
+        return mav;
+    }
+
+    @RequestMapping("/deleteBook.action")
+    public String deleteBook(Model model,Integer bookid) {
+        bookDao.deleteBook (bookid);
+        return "billList";
+    }
+    @RequestMapping("/billUpdate.action")
+    public ModelAndView billUpdate(String bookname,String writer) {
+        ModelAndView mav = new ModelAndView();
+        List<Book> books= bookDao.selectById(bookname,writer);
+        mav.addObject("books", books);
+        mav.setViewName("billUpdate");
+        return mav;
+    }
+    @RequestMapping("/updateBook.action")
+    public ModelAndView update(Book book){
+        ModelAndView mav = new ModelAndView();
+        bookDao.updateBook (book);
+        Book book1=null;
+        List<Book> billList = bookDao.getBookList(book);
+        mav.addObject("billList",billList);
+        mav.setViewName("billList");
+        return mav;
+    }
 
 //    view显示页面
 
