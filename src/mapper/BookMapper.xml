@@ -9,7 +9,7 @@
         <result property="productUnit" column="productUnit"></result>
         <result property="proId" column="proId"></result>
         <result property="payed" column="payed"></result>
-        <association property="borrowBookUser" javaType="BorrowBookUser">
+        <association property="borrow" javaType="Borrow">
             <id property="id" column="bubid"></id>
         </association>
     </resultMap>
@@ -18,24 +18,9 @@
         select * from book
     </select>
 
-
-
-    <select id="borrowBookList" resultMap="bookmap">
-
-        select b.bookid,b.name,b.author,b.publishDate, bub.id as bubid from book as b left join borrow_user_book as bub on b.bookid=bub.bookid
-    </select>
-
-    <insert id="borrow" parameterType="BorrowBookUser">
-        insert into borrow_user_book value(null,#{userid},#{bookid})
-    </insert>
-
     <insert id="getBookAdd" parameterType="book">
         insert into book(bookid,productName,productUnit,proId,payed) values (#{bookid},#{productName},#{productUnit},#{proId},#{payed})
     </insert>
-
-    <select id="getBookid" parameterType="book">
-        select * book where bookid=#{bookid}
-    </select>
 
 
 

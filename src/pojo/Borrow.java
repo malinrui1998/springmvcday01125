@@ -1,6 +1,6 @@
 package pojo;
 
-public class BorrowBookUser {
+public class Borrow{
     private Integer id;
     private Integer userid;
     private Integer bookid;
