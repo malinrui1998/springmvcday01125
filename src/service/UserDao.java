@@ -19,4 +19,6 @@ public interface UserDao {
 
 
     public List<User> search(User user);
+
+    public int modifyPs(User user);
 }

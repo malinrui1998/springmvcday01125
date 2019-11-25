@@ -2,7 +2,7 @@ package pojo;
 
 public class Borrow{
     private Integer id;
-    private Integer userid;
+    private Integer user_id;
     private Integer bookid;
 
     public Integer getId() {
@@ -13,12 +13,12 @@ public class Borrow{
         this.id = id;
     }
 
-    public Integer getUserid() {
-        return userid;
+    public Integer getUser_id() {
+        return user_id;
     }
 
-    public void setUserid(Integer userid) {
-        this.userid = userid;
+    public void setUser_id(Integer user_id) {
+        this.user_id = user_id;
     }
 
     public Integer getBookid() {
@@ -27,5 +27,14 @@ public class Borrow{
 
     public void setBookid(Integer bookid) {
         this.bookid = bookid;
+    }
+
+    @Override
+    public String toString() {
+        return "Borrow{" +
+                "id=" + id +
+                ", user_id=" + user_id +
+                ", bookid=" + bookid +
+                '}';
     }
 }

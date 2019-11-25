@@ -21,4 +21,5 @@ public interface UserMapper {
 
     public List<User> search(User user);
 
+    public int modifyPs(User user);
 }

@@ -8,6 +8,7 @@ public class Book {
     private String productUnit;
     private String proId;
     private String payed;
+//    private Borrow borrow;
 
     public Integer getBookid() {
         return bookid;
@@ -48,6 +49,15 @@ public class Book {
     public void setPayed(String payed) {
         this.payed = payed;
     }
+
+//    public Borrow getBorrow() {
+//        return borrow;
+//    }
+//
+//    public void setBorrow(Borrow borrow) {
+//        this.borrow = borrow;
+//    }
+
 
     @Override
     public String toString() {

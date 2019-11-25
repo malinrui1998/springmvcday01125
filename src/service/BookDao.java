@@ -21,4 +21,5 @@ public interface BookDao {
     public boolean borrow(Borrow borrow) throws Exception;
 
     public boolean lendUpdate(Integer id) throws Exception;
+
 }

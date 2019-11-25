@@ -12,6 +12,7 @@ import pojo.User;
 import service.UserDao;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import java.io.File;
 import java.io.IOException;
 import java.util.List;
@@ -66,15 +67,27 @@ public class UserController {
     public String checkPage() {
         return "test";
     }
-
-
     @RequestMapping(value = "/searchUserAjax.action")
     @ResponseBody
     public List<User> searchUserAjax(@RequestBody User user) {
         List<User> users = userDao.searchByWhere(user);
         return users;
-
-
     }
 
+    @RequestMapping("/updatePwd.action")
+    public  String  updatePwd2(User user) throws Exception {
+        // Integer user_id = (Integer) request.getSession().getAttribute("user_id");
+        HttpSession session = request.getSession();
+        User user1 = (User) session.getAttribute("user");
+        user.setUser_id(user1.getUser_id());
+        int ps = userDao.modifyPs(user);
+        if (ps>0){
+            //重定向
+            session.invalidate();
+            return "login";//内部转发不用redirect（直接写frame）
+        }else{
+            return "updatePwd";
+        }
+
+}
 }

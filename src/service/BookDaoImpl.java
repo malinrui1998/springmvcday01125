@@ -54,5 +54,4 @@ public class BookDaoImpl implements BookDao {
         return bookMapper.lendUpdate(id);
     }
 
-
 }

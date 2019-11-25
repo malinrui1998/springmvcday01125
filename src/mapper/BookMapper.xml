@@ -9,9 +9,10 @@
         <result property="productUnit" column="productUnit"></result>
         <result property="proId" column="proId"></result>
         <result property="payed" column="payed"></result>
+        <!--<result column="borrow" property="borrow"></result>-->
 
         <association property="borrow" javaType="Borrow">
-            <id property="id" column="bubid"></id>
+            <id property="id" column="bobid"></id>
         </association>
     </resultMap>
 
@@ -37,9 +38,14 @@
         update book set productName=#{productName},productUnit=#{productUnit},proId=#{proId},payed=#{payed} where bookid=#{bookid}
     </update>
 
-    <insert id="borrow" parameterType="borrow" >
-    insert into borrow values(#{id}=null ,#{bookid},#{userid} )
+
+    <insert id="borrow" parameterType="Borrow" >
+    insert into borrow values(null ,#{user_id},#{bookid})
     </insert>
+
+    <!--<select id="borrowBookList" resultMap="book" >-->
+    <!--select b.bookid,b.productName,b.productUnit,b.proId,b.payed,bo.id as bobid from book as b left join borrow as bo on b.bookid=bo.bookid-->
+    <!--</select>-->
     <!--<update id="lendUpdate" parameterType="book">-->
     <!--update book  set lend="是" where id=#{id}-->
 <!--</update>-->

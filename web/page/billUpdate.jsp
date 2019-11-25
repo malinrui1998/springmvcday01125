@@ -1,4 +1,5 @@
 ﻿<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <html>
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
@@ -11,7 +12,7 @@
     <div class="optitle clearfix">
         <div class="title">图书管理&gt;&gt;</div>
     </div>
-    <form id="form1" name="form1" method="post" action="/updateBook.action?id=${book.bookid}">
+    <form id="form1" name="form1" method="post" action="/mlr/billUpdate.action?bookid=${book.bookid}">
         <input type="hidden" name="method" value="update">
         <input type="hidden" name="billId" id="billId" value="6">
         <div class="content">
@@ -19,12 +20,13 @@
                 <tbody>
                 <tr>
                     <td class="field">书籍名称：</td>
-                    <td><input type="text" name="productName" class="text" id="productName" value="西游记"> <font
+                    <td></td>
+                    <td><input type="text" name="productName" class="text" id="productName" value="${book.productName}"> <font
                             color="red">*</font><font color="red" id="productName_span"></font></td>
                 </tr>
                 <tr>
                     <td class="field">作者：</td>
-                    <td><input type="text" name="productUnit" class="text" id="productUnit" value=""> <font color="red">*</font><font
+                    <td><input type="text" name="productUnit" class="text" id="productUnit" value="${book.productUnit}"> <font color="red">*</font><font
                             color="red" id="productUnit_span"></font></td>
                 </tr>
 
@@ -53,7 +55,7 @@
             </table>
         </div>
         <div class="buttons">
-            <input type="button" name="update" id="update" value="保存" class="input-button">
+            <input type="submit" name="update" id="update" value="保存" class="input-button">
             <input type="button" name="button" id="button" onclick="history.back(-1)" value="返回" class="input-button">
         </div>
 

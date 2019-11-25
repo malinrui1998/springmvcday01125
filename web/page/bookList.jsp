@@ -22,6 +22,11 @@
                     是否借出：<input type="radio" name="payed" value="1">是<input type="radio" name="payed" value="0">否
                     <input value="查 询" type="submit">
 
+                    <em>
+                        <a href="/mlr/selectById.action?bookid=${item.bookid}">
+                            <input name="select" value="查 询" class="input-button" type="submit"></a>
+                    </em>
+
                 </td>
             </tr>
             </tbody>
@@ -65,17 +70,23 @@
             <c:forEach items="${pageInfo.list}" var="item">
                 <tr>
                     <td>${item.bookid}</td>
-                    <td><a href="/mlr/getBookByid.action?bookid=${item.bookid}" style="color:red">${item.productName}</a></td>
+                    <td><a href="<%=request.getContextPath()%>/getBookByid.action?bookid=${item.bookid}"
+                           style="color:red">${item.productName}</a></td>
                     <td>${item.productUnit}</td>
                     <td>${item.proId}</td>
                     <td>${item.payed}</td>
                     <td collapse=2>
                         <em>
-                            <input value="删除" class="input-button" onclick="" type="button">
+                            <a href="/mlr/deleteBook.action?bookid=${item.bookid}"><input
+                                    value="删除" class="input-button" type="button"></a>
                         </em>
-                        <%--<em><input value="修改" class="input-button" onclick="" type="button">--%>
+                        <%--<em>--%>
+                            <%--<input value="删除" class="input-button" onclick="" type="button">--%>
                         <%--</em>--%>
-                        <em><a href="page/billUpdate.jsp"><input value="修改" class="input-button" type="button"></a>
+                            <%--<em><input value="修改" class="input-button" onclick="" type="button">--%>
+                            <%--</em>--%>
+                        <em><a href="/mlr/selectById.action?bookid=${item.bookid}"><input
+                                value="修改" class="input-button" type="button"></a>
                         </em>
                     </td>
                         <%--<td><input type="button" value="借阅"--%>
@@ -98,12 +109,13 @@
         a.on("click", function () {
             for (var i = 0; i < a.length; i++) {
                 var id = $(this)[i].parentNode.parentNode.children[0].innerHTML;
-                console.log(id);
-                location.href = "<%=request.getContextPath()%>/borrow.action?bookid=" + id;
+                console.log(bookid);
+                location.href = "<%=request.getContextPath()%>/billView.action?bookid=" + bookid;
             }
         })
     })
 </script>
+
 <div align="center"> 当前页是第<span>${pageInfo.pageNum}</span>页 &nbsp; 一共<span>${pageInfo.pages}</span>页 &nbsp;
     <c:if test="${pageInfo.isFirstPage==false}">
         <a href="<%=request.getContextPath()%>/bookList.action?page=${pageInfo.prePage}"> 上一页</a></c:if>

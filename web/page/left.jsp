@@ -29,7 +29,7 @@
 			<img src="<%=request.getContextPath()%>/images/btn_users.gif" />
 		</a>
 		</li>	
-		<li><a href="/mlr/updatePwd.jsp" target="mainFrame">
+		<li><a href="updatePwd.jsp" target="mainFrame">
 			<img src="<%=request.getContextPath()%>/images/btn_password.gif" />
 		</a>
 		</li>

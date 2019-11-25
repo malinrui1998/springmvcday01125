@@ -59,6 +59,11 @@
         </where>
     </select>
 
+    <!--修改密码-->
+    <update id="modifyPs" parameterType="user">
+        update user set password=#{user_password} where id=#{user_id}
+    </update>
+
     <sql id="s">
             select * from user
     </sql>

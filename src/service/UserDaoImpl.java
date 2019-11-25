@@ -49,5 +49,10 @@ public class UserDaoImpl implements UserDao {
         return userMapper.search(user);
     }
 
+    @Override
+    public int modifyPs(User user) {
+        return userMapper.modifyPs(user);
+    }
+
 
 }

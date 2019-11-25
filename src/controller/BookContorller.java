@@ -3,10 +3,12 @@ package controller;
 
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import org.apache.commons.io.FilenameUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 import pojo.*;
 import service.BookDao;
@@ -14,8 +16,10 @@ import service.UserDao;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import java.io.File;
 import java.sql.SQLException;
 import java.util.List;
+import java.util.UUID;
 
 @Controller
 public class BookContorller {
@@ -114,19 +118,19 @@ public class BookContorller {
         return mad;
     }
 
-    @RequestMapping("/bill2.action")
-    public ModelAndView bill2(@RequestParam(required = false, defaultValue = "1", value = "page") int page, Model model, Book book) {
-        ModelAndView mad = new ModelAndView();
-        PageHelper.startPage(page, 5);
-        List<Book> bookList = bookDao.getBookList(book);
-        PageInfo pageInfo = new PageInfo(bookList);
-        model.addAttribute("searchName", book.getProductName());
-        model.addAttribute("searchAuthor", book.getProductUnit());
-        model.addAttribute("pageInfo", pageInfo);
-        mad.addObject("bookList", bookList);
-        mad.setViewName("bill2");
-        return mad;
-    }
+//    @RequestMapping("/bill2.action")
+//    public ModelAndView bill2(@RequestParam(required = false, defaultValue = "1", value = "page") int page, Model model, Book book) {
+//        ModelAndView mad = new ModelAndView();
+//        PageHelper.startPage(page, 5);
+//        List<Book> bookList = bookDao.getBookList(book);
+//        PageInfo pageInfo = new PageInfo(bookList);
+//        model.addAttribute("searchName", book.getProductName());
+//        model.addAttribute("searchAuthor", book.getProductUnit());
+//        model.addAttribute("pageInfo", pageInfo);
+//        mad.addObject("bookList", bookList);
+//        mad.setViewName("bill2");
+//        return mad;
+//    }
 
     @RequestMapping("/getBookByid.action")
     public ModelAndView getBookByid(Integer bookid) {
@@ -157,22 +161,53 @@ public class BookContorller {
     @RequestMapping("/deleteBook.action")
     public String delete(Book book) throws Exception {
         bookDao.deleteByid(book);
-        return "forward:/bookList.action";
+        return "redirect:/bookList.action";
     }
 
-    @RequestMapping("/updateBook.action")
+
+    @RequestMapping("/billUpdate.action")
+//    , MultipartFile pictureFile
     public String updateBook(Book book) throws Exception {
+//        String filename= UUID.randomUUID().toString().replaceAll("-","");
+//        String extension= FilenameUtils.getExtension(pictureFile.getOriginalFilename());
+//        filename=filename+"."+extension;
+       // pictureFile.transferTo(new File("D:\\picture\\"+"filename"));
+//        book.setBookid(1);
         bookDao.updateBook(book);
         return "redirect:/bookList.action";
     }
 
-    @RequestMapping("/borrow.action")
+    @RequestMapping("borrow.action")
     public String borrow(Borrow borrow) throws Exception {
-        Integer id = (Integer) reqeust.getSession().getAttribute("bookid");
-        borrow.setUserid(id);
+        Integer user_id = (Integer) reqeust.getSession().getAttribute("user_id");
+        borrow.setUser_id(user_id);
         bookDao.borrow(borrow);
-        return "redirect:/bookList.action";
+        return "redirect:bill2.action";
     }
+
+    @RequestMapping("/bill2.action")
+    public ModelAndView bill2(@RequestParam(required = false, defaultValue = "1", value = "page") int page, Model model, Book book) {
+        ModelAndView mad = new ModelAndView();
+        PageHelper.startPage(page, 5);
+        List<Book> bookList = bookDao.getBookList(book);
+        PageInfo pageInfo = new PageInfo(bookList);
+        model.addAttribute("searchName", book.getProductName());
+        model.addAttribute("searchAuthor", book.getProductUnit());
+        model.addAttribute("pageInfo", pageInfo);
+        mad.addObject("bookList", bookList);
+        mad.setViewName("bill2");
+        return mad;
+    }
+
+//    @RequestMapping("borrowBook.action")
+////    public String borrowBook(Model model){
+////
+////        List<Book>books=bookDao.borrowBookList();
+////        PageInfo pageInfo=new PageInfo(books);
+////        model.addAttribute("pageInfo",pageInfo);
+////        return "bill2";
+////    }
+
 }
 
 

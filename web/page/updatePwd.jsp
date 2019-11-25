@@ -8,25 +8,28 @@
 </head>
 <body>
 	<div class="main">
+		<form action="/mlr/updatePwd.action?user_id=${user.user_id}" method="post">
 		<div class="optitle clearfix">
 			<div class="title">密码修改&gt;&gt;</div>
 		</div>
 			<div class="content">
-				<table class="box"> 
-				  <input  type="hidden" id="userId" value="${userInfo.userId}"/>
+				<table class="box">
+					<%--value="${userInfo.userId}"--%>
+				  <input  type="hidden" id="userId" />
 					 <tr>
 					<td class="field">旧密码：</td>
 					<td><input type="password" name="oldPassword" class="text" id="oldPassword"  /> <font color="red">*</font><font color="red" id="password_span"></font></td>
 				</tr>
 				 <tr>
 					<td class="field">新密码：</td>
-					<td><input type="password" name="newPassword" class="text" id="newPassword"  /> <font color="red">*</font></td>
+					<td><input type="password" name="user_password" class="text" id="newPassword"  /> <font color="red">*</font></td>
 				</tr>
 				</table>
 			</div>
 			<div class="buttons">
-				<input type="button" id="update" value="修改" class="input-button" />
+				<input type="submit" id="update" value="修改" class="input-button" />
 			</div>
+		</form>
 	</div>
 	<script type="text/javascript" src="<%=request.getContextPath()%>/js/user/updatePwd.js"></script>
 </body>
